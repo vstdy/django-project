@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load cache %}
+
+{% block title %}
+Профайл пользователя {{ profile.username }}
+{% endblock %}
+
+{% block content %}
+
+<main role="main" class="container">
+  <div class="row">
+
+    <div class="col-md-3 mb-3 mt-1">
+      {% include "includes/author_item.html" %}
+    </div>
+
+    <div class="col-md-9">
+      {% cache 5 profile_page %}
+
+      {% for post in page %}
+        {% include "includes/post_item.html" %}
+      {% endfor %}
+
+      {% endcache %}
+
+      {% if page.has_other_pages %}
+        {% include "includes/paginator.html" %}
+      {% endif %}
+    </div>
+
+  </div>
+</main>
+
+{% endblock %}
